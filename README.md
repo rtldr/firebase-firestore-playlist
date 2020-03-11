@@ -1,4 +1,4 @@
 # firebase-firestore-playlist
-All course files for the Firebase Firestore playlist on The Net Ninja YouTube channel. 
+All course files for the Firebase Firestore playlist on The Net Ninja YouTube channel (branches: lesson-*) 
 
-Make sure you select the correct branch to see the files :)
+To see rtldr's code, checkout rtldr-dev
