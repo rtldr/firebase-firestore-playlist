@@ -9,6 +9,7 @@ const form = document.querySelector("#add-cafe-form");
 //     });
 // });
 
+// GET AND UPDATE
 db.collection('cafes').orderBy('name').onSnapshot(snapshot => {
     let changes = snapshot.docChanges();
     console.log(changes);
