@@ -2,9 +2,23 @@ const cafeList = document.querySelector('#cafe-list');
 const form = document.querySelector("#add-cafe-form");
 
 // GET
-db.collection('cafes').get().then((snapshot) => {
-    snapshot.docs.forEach((doc) => {
-        render(doc);
+// db.collection('cafes').get().then((snapshot) => {
+//     snapshot.docs.forEach((doc) => {
+//         render(doc);
+//         console.log(doc);
+//     });
+// });
+
+db.collection('cafes').orderBy('name').onSnapshot(snapshot => {
+    let changes = snapshot.docChanges();
+    console.log(changes);
+    changes.forEach(change => {
+        if(change.type == 'added') {
+            render(change.doc);
+        } else if(change.type == 'removed') {
+            let li = cafeList.querySelector(`[data-id=${change.doc.id}]`);
+            cafeList.removeChild(li);
+        }
     });
 });
 
@@ -47,8 +61,10 @@ form.addEventListener('submit', (e) => {
         city: form.city.value
     }).then(doc => {
         console.log(`wrote data with id ${doc.id}`);
+        // db.collection('cafes').doc(doc.id).get().then(d => render(d));  // Real time UI update
+        
     }).catch(err => {
-        console.error('Error adding document: ', error);
+        console.error('Error adding document: ', err);
     });
     form.name.value = '';
     form.city.value = '';
