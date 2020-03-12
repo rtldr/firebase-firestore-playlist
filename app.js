@@ -16,12 +16,27 @@ function render(doc) {
     let city = document.createElement('span');
     city.textContent = doc.data().city;
 
+    let cross = document.createElement('div');
+    cross.textContent = 'x';
+    cross.addEventListener('click', remove);
+
     let li = document.createElement('li');
     li.setAttribute('data-id', doc.id);
     li.appendChild(name);
     li.appendChild(city);
+    li.appendChild(cross);
 
     cafeList.appendChild(li);
+}
+
+// REMOVE
+function remove(e) {
+    e.stopPropagation();
+    let parent = e.target.parentElement;
+    let id = parent.getAttribute('data-id');
+    db.collection('cafes').doc(id).delete().then(() => {
+        console.log(`Deleted document with id ${id}`);
+    });
 }
 
 // PUT
